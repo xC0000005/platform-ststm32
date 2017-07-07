@@ -18,7 +18,7 @@ from platformio.managers.platform import PlatformBase
 class Ststm32Platform(PlatformBase):
 
     def configure_default_packages(self, variables, targets):
-        if "mbed" in variables.get("pioframework"):
+        if "mbed" in variables.get("pioframework", []):
             self.packages["toolchain-gccarmnoneeabi"][
                 'version'] = ">=1.50401.0"
         return PlatformBase.configure_default_packages(self, variables,
