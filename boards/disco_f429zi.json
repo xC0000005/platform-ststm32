@@ -8,6 +8,17 @@
   "connectivity": [
     "can"
   ],
+  "debug": {
+    "default_tools": [
+      "stlink"
+    ],
+    "onboard_tools": [
+      "stlink"
+    ],
+    "openocd_board": "stm32f429discovery",
+    "openocd_target": "stm32f4x",
+    "svd_path": "STM32F429x.svd"
+  },
   "frameworks": [
     "mbed",
     "stm32cube"
@@ -16,19 +27,13 @@
   "upload": {
     "maximum_ram_size": 262144,
     "maximum_size": 2097152,
-    "protocol": "stlink"
-  },
-  "debug": {
-    "tools": {
-      "stlink-v2": {
-        "server": {
-          "package": "tool-openocd",
-          "executable": "bin/openocd",
-          "arguments": ["-f", "scripts/board/stm32f429discovery.cfg"]
-        },
-        "onboard": true
-      }
-    }
+    "protocol": "mbed",
+    "protocols": [
+      "jlink",
+      "stlink",
+      "blackmagic",
+      "mbed"
+    ]
   },
   "url": "http://www.st.com/web/catalog/tools/FM116/SC959/SS1532/LN1848/PF259090",
   "vendor": "ST"

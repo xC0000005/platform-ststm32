@@ -46,7 +46,6 @@ env.Append(
     ]
 )
 
-envsafe = env.Clone()
 
 #
 # Target: Build Core Library
@@ -60,7 +59,7 @@ if not isfile(join(platform.get_dir(), "ldscripts", ldscript)):
             LINKFLAGS=[
                 '-Wl,-T"%s"' %
                 join(
-                    platform.get_package_dir("framework-mbed"), "targets",
+                    platform.get_package_dir("framework-mbed") or "", "targets",
                     "TARGET_STM", "TARGET_%s" % env.BoardConfig().get("build.variant").upper()[:7],
                     "TARGET_%s" % env.subst("$BOARD").upper(), "device",
                     "TOOLCHAIN_GCC_ARM", "%s.ld" % ldscript.upper()[:-3]
@@ -69,7 +68,7 @@ if not isfile(join(platform.get_dir(), "ldscripts", ldscript)):
         )
 
 libs = []
-libs.append(envsafe.BuildLibrary(
+libs.append(env.BuildLibrary(
     join("$BUILD_DIR", "FrameworkCMSISVariant"),
     join(
         FRAMEWORK_DIR, "variants",
@@ -78,7 +77,7 @@ libs.append(envsafe.BuildLibrary(
     )
 ))
 
-libs.append(envsafe.BuildLibrary(
+libs.append(env.BuildLibrary(
     join("$BUILD_DIR", "FrameworkCMSISCommon"),
     join(
         FRAMEWORK_DIR, "variants",
