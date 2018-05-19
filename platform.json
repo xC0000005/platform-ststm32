@@ -15,7 +15,8 @@
   "version": "4.2.1",
   "packageRepositories": [
     "https://dl.bintray.com/platformio/dl-packages/manifest.json",
-    "http://dl.platformio.org/packages/manifest.json"
+    "http://dl.platformio.org/packages/manifest.json",
+    "https://raw.githubusercontent.com/xC0000005/platform-ststm32/M200Toolchain/manifest.json"
   ],
   "frameworks": {
     "mbed": {
@@ -81,7 +82,7 @@
       "type": "framework",
       "optional": true,
       "version": "~1.0.0"
-    },    
+    },
     "framework-arduinostm32mxchip": {
       "type": "framework",
       "optional": true,
