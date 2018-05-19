@@ -1,0 +1,10 @@
+{
+  "framework-arduinoSTM32GENERIC": [
+    {
+      "sha1": "notyet",
+      "system": "*",
+      "url": "soon",
+      "version": "1.0.0"
+    }
+  ]
+}
