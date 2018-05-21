@@ -1,9 +1,8 @@
 {
   "framework-arduinoSTM32GENERIC": [
     {
-      "sha1": "bacf9e944d56c09f981e0c10a337701dc7c8b8ec",
       "system": "*",
-      "url": "https://github.com/xC0000005/STM32GENERIC/tree/CoreUpdates",
+      "url": "https://github.com/xC0000005/STM32GENERIC",
       "version": "1.0.0"
     }
   ]
