@@ -28,7 +28,7 @@ env = DefaultEnvironment()
 
 if "USE_STM32GENERIC" in env.get("CPPDEFINES"):
     env.SConscript("STM32GENERIC/stm32generic.py")
-if "stm32f1" in env.BoardConfig().get("build.variant"):
+elif "stm32f1" in env.BoardConfig().get("build.variant"):
     env.SConscript("maple/stm32f1.py")
 elif "stm32f4" in env.BoardConfig().get("build.variant"):
     env.SConscript("maple/stm32f4.py")
