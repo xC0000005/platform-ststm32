@@ -1,5 +1,5 @@
 {
-  "framework-arduinoSTM32GENERIC": [
+  "framework-arduinostm32generic": [
     {
       "system": "*",
       "url": "https://api.github.com/repos/xC0000005/STM32GENERIC/tarball/master",
