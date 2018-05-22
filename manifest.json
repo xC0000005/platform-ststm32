@@ -2,7 +2,7 @@
   "framework-arduinoSTM32GENERIC": [
     {
       "system": "*",
-      "url": "https://github.com/xC0000005/STM32GENERIC",
+      "url": "https://api.github.com/repos/xC0000005/STM32GENERIC/tarball/master",
       "version": "1.0.0"
     }
   ]
