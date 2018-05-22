@@ -62,7 +62,7 @@
       }
     }
   },
-  "frameworks": ["arduino", "arduinoSTM32GENERIC"],
+  "frameworks": ["arduino", "arduinostm32generic"],
   "name": "Malyan STM32F103CB (20k RAM. 128k Flash)",
   "upload": {
     "disable_flushing": false,
