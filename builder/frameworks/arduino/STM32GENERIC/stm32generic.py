@@ -64,16 +64,15 @@ def getVariantFromBoard(boardi):
     assert(var_folder!="")
     return var_folder;
 
-#HAL MX based Arduino build
+#STM32GENERIC based builder
 def stm32generic():
-    print "stm32generic()"
     env = DefaultEnvironment()
     platform = env.PioPlatform()
     board = env.BoardConfig()
 
     FRAMEWORK_DIR = join(platform.get_package_dir(
-        "framework-arduinoSTM32GENERIC"), "STM32")
-    FRAMEWORK_VERSION = platform.get_package_version("framework-arduinoSTM32GENERIC")
+        "framework-arduinostm32generic"), "STM32")
+    FRAMEWORK_VERSION = platform.get_package_version("framework-arduinostm32generic")
     assert isdir(FRAMEWORK_DIR)
 
     #resolve some defines based on board's json file
@@ -166,12 +165,14 @@ def stm32generic():
         ]
     )
 
-    env['LDSCRIPT_PATH'] = "ldscript.ld";
+    env['LDSCRIPT_PATH'] = join("ld", "ldscript.ld");
 
     #
     # upload handling copied from stm32duino, probably not relevant for this package
     # copied here for reference, may be better to remove in the future
     #
+    vector = int(board.get("build.vec_tab_addr", "0x8000000"), 16)
+
     if env.subst("$UPLOAD_PROTOCOL") == "dfu":
         if board.id in ("maple", "maple_mini_origin"):
             env.Append(CPPDEFINES=[("VECT_TAB_OFFSET", 0x8005000), "SERIAL_USB"])
@@ -180,11 +181,13 @@ def stm32generic():
                 ("VECT_TAB_OFFSET", 0x8002000), "SERIAL_USB", "GENERIC_BOOTLOADER"])
 
             if "stm32f103r" in board.get("build.mcu", ""):
-                env.Replace(LDSCRIPT_PATH="bootloader.ld")
+                ldscript = join("ld", "f103x8.ld");
+                env.Replace(LDSCRIPT_PATH=ldscript)
             elif board.get("upload.boot_version", 0) == 2:
-                env.Replace(LDSCRIPT_PATH="bootloader_20.ld")
+                ldscript = join("ld", "f103x8_bootloader_2000.ld");
+                env.Replace(LDSCRIPT_PATH=ldscript)
     else:
-        env.Append(CPPDEFINES=[("VECT_TAB_OFFSET", 0x8000000)])
+        env.Append(CPPDEFINES=[("VECT_TAB_OFFSET", vector)])
 
     #
     # Lookup for specific core's libraries
@@ -222,4 +225,5 @@ def stm32generic():
         join(FRAMEWORK_DIR, "variants", var_folder)) )
 
     #env.Prepend(LIBS=libs)
+print "generic"
 stm32generic()
