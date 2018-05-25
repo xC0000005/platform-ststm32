@@ -41,7 +41,7 @@
     },
     "arduinostm32generic": {
       "package": "framework-arduinostm32generic",
-      "script": "builder/frameworks/arduino/stm32duino.py"
+      "script": "builder/frameworks/arduino/STM32GENERIC/stm32generic.py"
     },
     "stm32cube": {
       "package": "framework-stm32cube",
