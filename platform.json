@@ -43,6 +43,10 @@
       "package": "framework-arduinostm32generic",
       "script": "builder/frameworks/arduino/STM32GENERIC/stm32generic.py"
     },
+    "arduinostm32core": {
+      "package": "framework-arduinostm32core",
+      "script": "builder/frameworks/arduino/stm32core/stm32core.py"
+    },
     "stm32cube": {
       "package": "framework-stm32cube",
       "script": "builder/frameworks/stm32cube.py"
@@ -79,6 +83,11 @@
       "version": "~2.1.0"
     },
     "framework-arduinostm32generic": {
+      "type": "framework",
+      "optional": true,
+      "version": "~1.0.0"
+    },
+    "framework-arduinostm32core": {
       "type": "framework",
       "optional": true,
       "version": "~1.0.0"
