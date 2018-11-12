@@ -34,36 +34,9 @@ env.Replace(
 
     ARFLAGS=["rc"],
 
-    ASFLAGS=["-x", "assembler-with-cpp"],
-
-    CCFLAGS=[
-        "-Os",  # optimize for size
-        "-ffunction-sections",  # place each function in its own section
-        "-fdata-sections",
-        "-Wall",
-        "-mthumb",
-        "-nostdlib"
-    ],
-
-    CXXFLAGS=[
-        "-fno-rtti",
-        "-fno-exceptions"
-    ],
-
-    CPPDEFINES=[
-        ("F_CPU", "$BOARD_F_CPU")
-    ],
-
-    LINKFLAGS=[
-        "-Os",
-        "-Wl,--gc-sections,--relax",
-        "-mthumb",
-        "-nostartfiles",
-        "-nostdlib"
-    ],
-
-    LIBS=["c", "gcc", "m", "stdc++", "nosys"],
-
+    SIZEPROGREGEXP=r"^(?:\.text|\.data|\.rodata|\.text.align|\.ARM.exidx)\s+(\d+).*",
+    SIZEDATAREGEXP=r"^(?:\.data|\.bss|\.noinit)\s+(\d+).*",
+    SIZECHECKCMD="$SIZETOOL -A -d $SOURCES",
     SIZEPRINTCMD='$SIZETOOL -B -d $SOURCES',
 
     PROGSUFFIX=".elf"
@@ -73,22 +46,7 @@ env.Replace(
 if env.get("PROGNAME", "program") == "program":
     env.Replace(PROGNAME="firmware")
 
-if "BOARD" in env:
-    env.Append(
-        CCFLAGS=[
-            "-mcpu=%s" % env.BoardConfig().get("build.cpu")
-        ],
-        CPPDEFINES=[
-            env.BoardConfig().get("build.variant", "").upper()
-        ],
-        LINKFLAGS=[
-            "-mcpu=%s" % env.BoardConfig().get("build.cpu")
-        ]
-    )
-
 env.Append(
-    ASFLAGS=env.get("CCFLAGS", [])[:],
-
     BUILDERS=dict(
         ElfToBin=Builder(
             action=env.VerboseAction(" ".join([
@@ -114,6 +72,9 @@ env.Append(
         )
     )
 )
+
+if not env.get("PIOFRAMEWORK"):
+    env.SConscript("frameworks/_bare.py")
 
 #
 # Target: Build executable and linkable firmware
@@ -196,7 +157,7 @@ elif upload_protocol in ("serial", "dfu") \
         __configure_upload_port=__configure_upload_port,
         UPLOADER=_upload_tool,
         UPLOADERFLAGS=["${__configure_upload_port(__env__)}"] + _upload_flags,
-        UPLOADCMD="$UPLOADER $UPLOADERFLAGS $PROJECT_DIR/$SOURCES"
+        UPLOADCMD='$UPLOADER $UPLOADERFLAGS "$PROJECT_DIR/$SOURCES"'
     )
     upload_actions = [
         env.VerboseAction(env.AutodetectUploadPort, "Looking for upload port..."),
